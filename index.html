@@ -1,0 +1,432 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Казань - город контрастов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .contact-bar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            text-align: right;
+            font-size: 1.1rem;
+        }
+        
+        .contact-bar a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .contact-bar a:hover {
+            color: #3498db;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        #2c3e50;
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(231, 76, 60, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(46, 204, 113, 0.3) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 0 20px;
+        }
+        
+        .intro p {
+            font-size: 1.2rem;
+            max-width: 900px;
+            margin: 0 auto 20px;
+        }
+        
+        .attractions {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .attraction-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .attraction-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .attraction-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            background-color: #3498db;
+        }
+        
+        .img-placeholder {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .kremlin { background: linear-gradient(135deg, #3498db, #2c3e50); }
+        .kul-sharif { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .suyumbike { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .temple { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .baumana { background: linear-gradient(135deg, #f1c40f, #f39c12); }
+        .palace { background: linear-gradient(135deg, #1abc9c, #16a085); }
+        .family-center { background: linear-gradient(135deg, #e67e22, #d35400); }
+        .museum { background: linear-gradient(135deg, #34495e, #2c3e50); }
+        
+        .attraction-content {
+            padding: 20px;
+        }
+        
+        .attraction-content h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .attraction-content p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .map-section {
+            background-color: #2c3e50;
+            color: white;
+            padding: 50px 20px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .map-section h2 {
+            margin-bottom: 30px;
+        }
+        
+        .map-container {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+        
+        .map-points {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .map-point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .map-point::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e74c3c;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { width: 20px; height: 20px; opacity: 1; }
+            100% { width: 40px; height: 40px; opacity: 0; }
+        }
+        
+        .point-1 { top: 40%; left: 45%; }
+        .point-2 { top: 42%; left: 46%; }
+        .point-3 { top: 41%; left: 47%; }
+        .point-4 { top: 50%; left: 40%; }
+        .point-5 { top: 43%; left: 44%; }
+        .point-6 { top: 39%; left: 46%; }
+        .point-7 { top: 45%; left: 42%; }
+        .point-8 { top: 44%; left: 45%; }
+        
+        footer {
+            background-color: #1a252f;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .attractions {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-bar {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-bar">
+        <a href="tel:+791700000000">+7 (917) 000-00-00</a> - Контакт для туров и информации
+    </div>
+    
+    <header>
+        <h1>Казань - город контрастов</h1>
+        <p class="subtitle">Столица Татарстана, где встречаются Восток и Запад, древность и современность</p>
+    </header>
+    
+    <div class="container">
+        <section class="intro">
+            <p>Казань — один из самых красивых и древних городов России, расположенный на берегу Волги. Город с более чем тысячелетней историей, где мирно соседствуют православные храмы и мусульманские мечети, а традиционная татарская культура гармонично сочетается с современными тенденциями.</p>
+            <p>Ниже представлены главные достопримечательности Казани, которые обязательно стоит посетить.</p>
+        </section>
+        
+        <section class="attractions">
+            <!-- Казанский Кремль -->
+            <div class="attraction-card">
+                <div class="img-placeholder kremlin">
+                    <div>Казанский Кремль<br><small>(изображение будет загружено)</small></div>
+                </div>
+                <div class="attraction-content">
+                    <h3>Казанский Кремль</h3>
+                    <p>Главная достопримечательность города, объект Всемирного наследия ЮНЕСКО. На территории Кремля расположены мечеть Кул-Шариф, Благовещенский собор, башня Сююмбике и множество музеев.</p>
+                    <p><strong>Адрес:</strong> ул. Кремлевская, 2</p>
+                    <p><strong>Время работы:</strong> ежедневно с 8:00 до 22:00</p>
+                </div>
+            </div>
+            
+            <!-- Мечеть Кул-Шариф -->
+            <div class="attraction-card">
+                <div class="img-placeholder kul-sharif">
+                    <div>Мечеть Кул-Шариф<br><small>(изображение будет загружено)</small></div>
+                </div>
+                <div class="attraction-content">
+                    <h3>Мечеть Кул-Шариф</h3>
+                    <p>Главная джума-мечеть Республики Татарстан и Казани, расположенная на территории Казанского кремля. Одна из крупнейших мечетей в Европе, открытая в 2005 году к тысячелетию Казани.</p>
+                    <p><strong>Адрес:</strong> территория Казанского Кремля</p>
+                    <p><strong>Время работы:</strong> ежедневно с 9:00 до 19:30</p>
+                </div>
+            </div>
+            
+            <!-- Башня Сююмбике -->
+            <div class="attraction-card">
+                <div class="img-placeholder suyumbike">
+                    <div>Башня Сююмбике<br><small>(изображение будет загружено)</small></div>
+                </div>
+                <div class="attraction-content">
+                    <h3>Башня Сююмбике</h3>
+                    <p>Дозорная башня в Казанском кремле, одна из известных «падающих» башень мира. Названа в честь последней казанской царицы Сююмбике. Отклонение от вертикали составляет почти 2 метра.</p>
+                    <p><strong>Адрес:</strong> территория Казанского Кремля</p>
+                    <p><strong>Интересный факт:</strong> Высота башни составляет 58 метров</p>
+                </div>
+            </div>
+            
+            <!-- Храм всех религий -->
+            <div class="attraction-card">
+                <div class="img-placeholder temple">
+                    <div>Храм всех религий<br><small>(изображение будет загружено)</small></div>
+                </div>
+                <div class="attraction-content">
+                    <h3>Храм всех религий</h3>
+                    <p>Уникальное архитектурное сооружение в Казани, объединяющее 16 религий (в том числе ислам, христианство, иудаизм, буддизм). Это не действующий храм, а культурный центр и музей.</p>
+                    <p><strong>Адрес:</strong> пос. Старое Аракчино, ул. Староаракчинская, 4</p>
+                    <p><strong>Время работы:</strong> ежедневно с 8:00 до 20:00</p>
+                </div>
+            </div>
+            
+            <!-- Улица Баумана -->
+            <div class="attraction-card">
+                <div class="img-placeholder baumana">
+                    <div>Улица Баумана<br><small>(изображение будет загружено)</small></div>
+                </div>
+                <div class="attraction-content">
+                    <h3>Улица Баумана</h3>
+                    <p>Главная пешеходная улица Казани, местный "Арбат". Здесь расположены многочисленные кафе, сувенирные магазины, памятники и фонтаны. Обязательно посетите Богоявленский собор и памятник Казанскому коту.</p>
+                    <p><strong>Адрес:</strong> ул. Баумана</p>
+                    <p><strong>Рекомендуем:</strong> Попробовать чак-чак в местных кафе</p>
+                </div>
+            </div>
+            
+            <!-- Дворец земледельцев -->
+            <div class="attraction-card">
+                <div class="img-placeholder palace">
+                    <div>Дворец земледельцев<br><small>(изображение будет загружено)</small></div>
+                </div>
+                <div class="attraction-content">
+                    <h3>Дворец земледельцев</h3>
+                    <p>Величественное здание в центре Казани, в котором размещается Министерство сельского хозяйства Татарстана. Особенно красиво выглядит в вечерней подсветке. Центральный элемент фасада — бронзовое дерево высотой 20 метров.</p>
+                    <p><strong>Адрес:</strong> ул. Федосеевская, 36</p>
+                    <p><strong>Лучшее время для посещения:</strong> Вечером, когда включается подсветка</p>
+                </div>
+            </div>
+            
+            <!-- Центр семьи "Казан" -->
+            <div class="attraction-card">
+                <div class="img-placeholder family-center">
+                    <div>Центр семьи "Казан"<br><small>(изображение будет загружено)</small></div>
+                </div>
+                <div class="attraction-content">
+                    <h3>Центр семьи "Казан"</h3>
+                    <p>Дворец бракосочетания в форме казана (котла), стоящий на стрелке рек Казанки и Волги. На крыше здания расположена смотровая площадка, откуда открывается панорамный вид на город и реки.</p>
+                    <p><strong>Адрес:</strong> ул. Сибгата Хакима, 4</p>
+                    <p><strong>Смотровая площадка:</strong> работает ежедневно с 10:00 до 19:00</p>
+                </div>
+            </div>
+            
+            <!-- Национальный музей РТ -->
+            <div class="attraction-card">
+                <div class="img-placeholder museum">
+                    <div>Национальный музей РТ<br><small>(изображение будет загружено)</small></div>
+                </div>
+                <div class="attraction-content">
+                    <h3>Национальный музей РТ</h3>
+                    <p>Крупнейший региональный музей России, основанный в 1894 году. В экспозиции представлены археологические находки, этнографические коллекции, документы и произведения искусства, рассказывающие об истории и культуре Татарстана.</p>
+                    <p><strong>Адрес:</strong> ул. Кремлевская, 2</p>
+                    <p><strong>Время работы:</strong> вт-вс с 10:00 до 18:00, пн - выходной</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <section class="map-section">
+        <div class="container">
+            <h2>Казань на карте</h2>
+            <div class="map-container">
+                <div class="map-points">
+                    <div class="map-point point-1"></div>
+                    <div class="map-point point-2"></div>
+                    <div class="map-point point-3"></div>
+                    <div class="map-point point-4"></div>
+                    <div class="map-point point-5"></div>
+                    <div class="map-point point-6"></div>
+                    <div class="map-point point-7"></div>
+                    <div class="map-point point-8"></div>
+                </div>
+                <p style="position: relative; z-index: 1; font-size: 1.2rem; background: rgba(0,0,0,0.5); padding: 10px 20px; border-radius: 10px;">Интерактивная карта достопримечательностей Казани</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Путеводитель по Казани. Все права защищены.</p>
+            <p>Сайт создан для ознакомления с достопримечательностями прекрасного города Казань.</p>
+            <p style="margin-top: 15px;">Контакт для информации и туров: <a href="tel:+791700000000" style="color: #3498db;">+7 (917) 000-00-00</a></p>
+        </div>
+    </footer>
+    
+    <script>
+        // Простой скрипт для анимации карты
+        document.addEventListener('DOMContentLoaded', function() {
+            const points = document.querySelectorAll('.map-point');
+            points.forEach(point => {
+                const delay = Math.random() * 2;
+                point.style.animationDelay = `${delay}s`;
+            });
+            
+            // Добавляем интерактивность карточкам
+            const cards = document.querySelectorAll('.attraction-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const title = this.querySelector('h3').textContent;
+                    alert(`Вы выбрали: ${title}. Для подробной информации звоните по номеру +7 (917) 000-00-00`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
